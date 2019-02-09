@@ -84,17 +84,19 @@ In order to gauge how well the model was working, I split my image and steering 
 
 Then I added more Convolutional layers and more Dense layers. The MSE on both training and validation set declines.
 
-I also tried to add dropout layer, trying to reduce overfitting. But it turned out bad.
+I also tried to add dropout layer, trying to reduce overfitting. But it turned out bad. The vehicle runs out of track more frequently than before.
 
-Later I realized that a low MSE can reflect the performance of the model to an extend. But it doesn't guarantee the vehicle will stay on the track. Sometimes even if the model only gives terrible result in one scenario, the who project fails. So I save the result for all epochs.
+Later I realized that a low MSE can reflect the performance of the model to an extend. But it doesn't guarantee the vehicle will stay on the track. Sometimes even if the model gives bad values for very small part of images, the vehicle will run out of track. Considering this, I cannot rely on the loss value, but to check the result manully for all epochs.
 
 For the last step, I run the simulator for all the epochs after training a model, to see how well the car was driving around track one. If none of the model works, I will adjust the parameter of layers, including Conv, Dense layers, as well as the training datasets.
 
-In the end, I pick the best performing models and generates the video.
+In the end, I pick the best performing models and generates the video. All the models that work are saved in `./model`.
 
 #### 2. Final Model Architecture
 
 The model architecture for model1 (train-model1.py) consisted of a convolution neural network with the following layers and layer sizes.
+
+This architecture refers to https://devblogs.nvidia.com/deep-learning-self-driving-cars/
 
 * Lambda layer: normalize the data
 * Cropping layer: crop the image
@@ -139,4 +141,4 @@ After the collection process, I had over 50k images. I then preprocessed this da
 
 I used all data for training the model. For validation data, I use only the general center driving, center camera data.
 
-I have to manually simulate all the models generated from the each training epoch. As the lowest MSE doesn't mean it can drive within the track. But basically in 5 epochs, the model will have the best performance. I put an `[OK]` label in front of the valid model name.
+I have to manually simulate all the models generated from the each training epoch. As the lowest MSE doesn't mean it can drive within the track. But basically in 5 epochs, the model will have the best performance. I put an `[OK]` label in front of the valid model name and save them in `./model`.
